@@ -1,9 +1,10 @@
 package com.blackbox.core.rest.uploader.model;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.blackbox.core.constant.Constant;
@@ -14,12 +15,12 @@ import com.blackbox.core.constant.Constant;
  */
 public class RecordModel {
     
-    private static final DateTimeFormatter format = DateTimeFormatter.ofPattern( Constant.DATE_TIME_FORMAT_PATTERN );
+    private static final DateTimeFormatter format = DateTimeFormat.forPattern( Constant.DATE_TIME_FORMAT_PATTERN );
     
-    @DateTimeFormat( pattern = Constant.DATE_TIME_FORMAT_PATTERN )
-    private LocalDateTime startDate;
-    @DateTimeFormat( pattern = Constant.DATE_TIME_FORMAT_PATTERN )
-    private LocalDateTime endDate;
+    @org.springframework.format.annotation.DateTimeFormat( pattern = Constant.DATE_TIME_FORMAT_PATTERN )
+    private DateTime startDate;
+    @org.springframework.format.annotation.DateTimeFormat( pattern = Constant.DATE_TIME_FORMAT_PATTERN )
+    private DateTime endDate;
     
     private Double longitude;
     
@@ -27,11 +28,11 @@ public class RecordModel {
     
     private MultipartFile file;
     
-    public LocalDateTime getStartDate() {
+    public DateTime getStartDate() {
         return startDate;
     }
     
-    public LocalDateTime getEndDate() {
+    public DateTime getEndDate() {
         return endDate;
     }
     
@@ -40,14 +41,14 @@ public class RecordModel {
     }
     
     public String getFolderName() {
-        return String.format( "%s-%s", format.format( startDate ), format.format( endDate ) );
+        return String.format( "%s-%s", format.print( startDate ), format.print( endDate ) );
     }
     
-    public void setStartDate( LocalDateTime startDate ) {
+    public void setStartDate( DateTime startDate ) {
         this.startDate = startDate;
     }
     
-    public void setEndDate( LocalDateTime endDate ) {
+    public void setEndDate( DateTime endDate ) {
         this.endDate = endDate;
     }
     

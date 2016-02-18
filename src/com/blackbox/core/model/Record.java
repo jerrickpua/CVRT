@@ -1,7 +1,8 @@
 package com.blackbox.core.model;
 
 import java.io.File;
-import java.time.LocalDateTime;
+
+import org.joda.time.DateTime;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
@@ -14,10 +15,10 @@ public class Record {
     private String name;
     
     @XStreamAlias( "start_date" )
-    private LocalDateTime startDate;
+    private DateTime startDate;
     
     @XStreamAlias( "end_date" )
-    private LocalDateTime endDate;
+    private DateTime endDate;
     
     @XStreamAlias( "location" )
     private Location location;
@@ -25,14 +26,14 @@ public class Record {
     @XStreamAlias( "audio_file_location" )
     private File filePath;
     
-    public Record( String name, LocalDateTime startDate, LocalDateTime endDate, File filePath ) {
+    public Record( String name, DateTime startDate, DateTime endDate, File filePath ) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
         this.filePath = filePath;
     }
     
-    public Record( String name, LocalDateTime startDate, LocalDateTime endDate, Location location, File filePath ) {
+    public Record( String name, DateTime startDate, DateTime endDate, Location location, File filePath ) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -40,7 +41,7 @@ public class Record {
         this.filePath = filePath;
     }
     
-    public LocalDateTime getEndDate() {
+    public DateTime getEndDate() {
         return endDate;
     }
     
@@ -56,7 +57,7 @@ public class Record {
         return name;
     }
     
-    public LocalDateTime getStartDate() {
+    public DateTime getStartDate() {
         return startDate;
     }
     

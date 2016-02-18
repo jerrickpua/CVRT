@@ -15,8 +15,40 @@
 			<spring:eval expression="@recorderDAO.list()" var="recordList" />
 			<c:choose>
 				<c:when test="${ recordList != null and recordList.size() > 0}">
-							<audio controls> <source
-				src="http://localhost:8080/PathToMp3/1.mp3" type="audio/mpeg" /> </audio>
+					<div class="panel-group" id="accordion">
+						<c:forEach items="${recordList}" var="record" varStatus="status">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<span class="strong"><a data-toggle="collapse"
+										data-parent="#accordion" href="#collapse_${status.index}"><c:out
+												value="${record.startDate.toString( 'MM-dd-yyyy hh:mm:ssa' )} TO ${record.endDate.toString( 'MM-dd-yyyy hh:mm:ssa' )}" /><span
+											class="caret"></span> </a> </span>
+								</div>
+								<div id="collapse_${status.index}"
+									class="panel-collapse collapse">
+									<div class="panel-body">
+										<audio controls> <source
+											src="http://localhost:
+											8080/audio/${record.name}.mp3"
+											type="audio/mpeg" /> </audio>
+										<c:choose>
+											<c:when test="${record.location != null }">
+												<a class="btn btn-info" target="_blank"
+													href="http://maps.google.com/?q=${record.location.latitude},${record.location.longitude}">MAP</a>
+											</c:when>
+											<c:otherwise>
+
+											</c:otherwise>
+										</c:choose>
+
+									</div>
+								</div>
+							</div>
+
+						</c:forEach>
+					</div>
+
+
 				</c:when>
 				<c:otherwise>
 					Empty
@@ -27,4 +59,15 @@
 	</div>
 
 </body>
+<script type="text/javascript">
+	$('#accordion').on('shown.bs.collapse', function() {
+
+		var panel = $(this).find('.in');
+
+		$('html, body').animate({
+			scrollTop : panel.offset().top
+		}, 500);
+
+	});
+</script>
 </html>

@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTimeComparator;
 
 import com.blackbox.core.dao.RecorderDAO;
 import com.blackbox.core.exception.CVRTException;
@@ -52,21 +53,23 @@ public class RecorderDAOImpl implements RecorderDAO {
     public void save( RecordModel recordUploadModel ) throws CVRTException {
         if ( recordUploadModel == null )
             throw new IllegalArgumentException( "Record model is null" );
-        File recordPath = new File(
-                String.format( "%s/%s.%s", outputPath, recordUploadModel.getFolderName(), recordExtension ) );
-        recordPath.getParentFile().mkdirs();
-        try ( FileOutputStream fos = new FileOutputStream( recordPath ) ) {
+            
+        File audioDirectory = new File( String.format( "%s/%s", outputPath, recordUploadModel.getFolderName() ) );
+        audioDirectory.mkdirs();
+        File audioFile = new File( audioDirectory,
+                String.format( "%s.%s", recordUploadModel.getFolderName(), recordExtension ) );
+        try ( FileOutputStream fos = new FileOutputStream( audioFile ) ) {
             IOUtils.copy( recordUploadModel.getFile().getInputStream(), fos );
         } catch ( Exception e ) {
             throw new CVRTException( e );
         }
-        writeRecordMetaToFileSystem( recordUploadModel, recordPath );
+        writeRecordMetaToFileSystem( recordUploadModel, audioFile );
         
     }
     
     private void writeRecordMetaToFileSystem( RecordModel recordModel, File recordPath ) throws CVRTException {
         Record record = new Record( recordModel.getFolderName(), recordModel.getStartDate(), recordModel.getEndDate(),
-                new Location( recordModel.getLongitude(), recordModel.getLatitude() ), recordPath.getParentFile() );
+                new Location( recordModel.getLongitude(), recordModel.getLatitude() ), recordPath );
         File xmlFile = new File( recordPath.getParentFile(), XML_FILE_NAME );
         try ( OutputStream fos = new FileOutputStream( xmlFile ) ) {
             xStream.toXML( record, fos );
@@ -86,7 +89,8 @@ public class RecorderDAOImpl implements RecorderDAO {
             } catch ( Exception e ) {
                 return null;
             }
-        } ).filter( ( Record record ) -> record != null ).collect( Collectors.toList() );
+        } ).filter( ( Record record ) -> record != null ).sorted( ( Record r1, Record r2 ) -> DateTimeComparator
+                .getInstance().compare( r1.getEndDate(), r2.getEndDate() ) ).collect( Collectors.toList() );
     }
     
     @Override

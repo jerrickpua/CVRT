@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.blackbox.core.dao.RecorderDAO;
 import com.blackbox.core.exception.CVRTException;
+import com.blackbox.core.rest.model.APIResponse;
 import com.blackbox.core.rest.uploader.model.RecordModel;
 
 /**
@@ -22,9 +23,9 @@ public class RestRecorderService {
     private RecorderDAO recorderDao;
     
     @RequestMapping( value = "record/upload", method = RequestMethod.POST )
-    public String bam( @ModelAttribute RecordModel recordUploadModel ) throws CVRTException {
+    public APIResponse bam( @ModelAttribute RecordModel recordUploadModel ) throws CVRTException {
         recorderDao.save( recordUploadModel );
-        return "wew";
+        return new APIResponse( "OK", 200 );
     }
     
 }
