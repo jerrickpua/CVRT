@@ -67,7 +67,12 @@
 		$('html, body').animate({
 			scrollTop : panel.offset().top
 		}, 500);
-
+		$('audio').each(function(){
+		    this.pause(); // Stop playing
+		    this.currentTime = 0; // Reset time
+		}); 
 	});
+	
+
 </script>
 </html>
