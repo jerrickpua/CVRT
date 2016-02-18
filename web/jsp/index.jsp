@@ -14,7 +14,7 @@
 		<div class="panel-body">
 			<spring:eval expression="@recorderDAO.list()" var="recordList" />
 			<c:choose>
-				<c:when test="${ recordList != null and recordList.size > 0}">
+				<c:when test="${ recordList != null and recordList.size() > 0}">
 							<audio controls> <source
 				src="http://localhost:8080/PathToMp3/1.mp3" type="audio/mpeg" /> </audio>
 				</c:when>
