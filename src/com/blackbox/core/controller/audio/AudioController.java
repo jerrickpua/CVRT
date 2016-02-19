@@ -23,6 +23,8 @@ public class AudioController {
         Record record = recoderDAO.get( name );
         MultipartFileSender.fromFile( record.getFilePath() ).with( request ).with( httpServletResponse )
                 .serveResource();
+//        OutputStream stream = httpServletResponse.getOutputStream();
+//        IOUtils.copy( new FileInputStream( record.getFilePath() ), stream );
         
     }
 }
