@@ -15,7 +15,7 @@ import com.blackbox.core.dao.RecorderDAO;
 import com.blackbox.core.dao.impl.RecorderDAOImpl;
 
 @Configuration
-@PropertySource( value = "file:${properties.file}" )
+@PropertySource( value = "classpath:conf/app.properties" )
 public class RootConfiguration {
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {

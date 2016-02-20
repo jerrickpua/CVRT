@@ -25,6 +25,11 @@
 				</configuration>
 			</plugin>
 		</plugins>
+	<resources>
+		<resource>
+			<directory>${basedir}/config</directory>
+		</resource>
+	</resources>
 	</build>
 	<properties>
 		<spring.version>4.2.4.RELEASE</spring.version>
@@ -118,4 +123,5 @@
 		</dependency>
 
 	</dependencies>
+
 </project>

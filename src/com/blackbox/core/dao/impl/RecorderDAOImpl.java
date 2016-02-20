@@ -40,10 +40,15 @@ public class RecorderDAOImpl implements RecorderDAO {
             throw new IllegalArgumentException( "Output path must not be empty" );
         if ( StringUtils.isEmpty( recordExtension ) )
             throw new IllegalArgumentException( "Record extension must not be empty" );
-        if ( outputPath.endsWith( "/" ) )
+        if ( outputPath.endsWith( "/" ) && outputPath.length() > 1 )
             outputPath = outputPath.substring( 0, outputPath.lastIndexOf( "/" ) ); // remove slash if it ended with one
+        if ( !new File( outputPath ).canWrite() ) {
+            throw new IllegalArgumentException( String
+                    .format( "Invalid output path. Lack of permission to write to output path '%s'", outputPath ) );
+        }
         this.recordExtension = recordExtension;
         this.outputPath = outputPath;
+        
         new File( outputPath ).mkdirs();
         this.xStream = new XStream();
         xStream.registerConverter( new LocalDateTimeConverter() );
@@ -61,6 +66,7 @@ public class RecorderDAOImpl implements RecorderDAO {
         try ( FileOutputStream fos = new FileOutputStream( audioFile ) ) {
             IOUtils.copy( recordUploadModel.getFile().getInputStream(), fos );
         } catch ( Exception e ) {
+            System.err.println( e );
             throw new CVRTException( e );
         }
         writeRecordMetaToFileSystem( recordUploadModel, audioFile );
