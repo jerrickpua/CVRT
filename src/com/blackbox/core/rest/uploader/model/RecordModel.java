@@ -26,6 +26,10 @@ public class RecordModel {
     
     private Double latitude;
     
+    private Double altitude;
+    
+    private Float speed;
+    
     private MultipartFile file;
     
     public DateTime getStartDate() {
@@ -70,5 +74,21 @@ public class RecordModel {
     
     public void setLatitude( Double latitude ) {
         this.latitude = latitude;
+    }
+    
+    public Double getAltitude() {
+        return altitude;
+    }
+    
+    public Float getSpeed() {
+        return speed;
+    }
+    
+    public void setAltitude( Double altitude ) {
+        this.altitude = altitude;
+    }
+    
+    public void setSpeed( Float speed ) {
+        this.speed = speed;
     }
 }

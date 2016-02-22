@@ -75,7 +75,9 @@ public class RecorderDAOImpl implements RecorderDAO {
     
     private void writeRecordMetaToFileSystem( RecordModel recordModel, File recordPath ) throws CVRTException {
         Record record = new Record( recordModel.getFolderName(), recordModel.getStartDate(), recordModel.getEndDate(),
-                new Location( recordModel.getLongitude(), recordModel.getLatitude() ), recordPath );
+                new Location( recordModel.getLongitude(), recordModel.getLatitude(), recordModel.getAltitude(),
+                        recordModel.getSpeed() ),
+                recordPath );
         File xmlFile = new File( recordPath.getParentFile(), XML_FILE_NAME );
         try ( OutputStream fos = new FileOutputStream( xmlFile ) ) {
             xStream.toXML( record, fos );

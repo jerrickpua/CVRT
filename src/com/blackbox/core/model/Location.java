@@ -11,9 +11,17 @@ public class Location {
     @XStreamAlias( "latitude" )
     private Double latitude;
     
-    public Location( Double longitude, Double latitude ) {
+    @XStreamAlias( "altitude" )
+    private Double altitude;
+    
+    @XStreamAlias( "speed" )
+    private Float speed;
+    
+    public Location( Double longitude, Double latitude, Double altitude, Float speed ) {
         this.longitude = longitude;
         this.latitude = latitude;
+        this.altitude = altitude;
+        this.speed = speed;
     }
     
     public Double getLatitude() {
@@ -22,6 +30,14 @@ public class Location {
     
     public Double getLongitude() {
         return longitude;
+    }
+    
+    public Double getAltitude() {
+        return altitude;
+    }
+    
+    public Float getSpeed() {
+        return speed;
     }
     
     @Override

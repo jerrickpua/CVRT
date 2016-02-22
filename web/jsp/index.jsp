@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <html lang="en">
 <spring:eval expression="@recorderDAO.list()" var="recordList" />
 <head>
@@ -31,8 +33,8 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="index.html">Portable Cockpit Voice
-					Recorder and Transponder</a>
+				<a class="navbar-brand" href="index.html"><b>Portable Cockpit Voice
+					Recorder and Transponder</b></a>
 			</div>
 			<!-- /.navbar-header -->
 
@@ -86,7 +88,9 @@
 														</audio>
 														<c:choose>
 															<c:when
-																test="${record.location != null and  not record.location.isEmpty() }">
+																test="${record.location != null and  not record.location.isEmpty() }"><br/>
+																Altitude:<fmt:formatNumber value="${record.location.altitude}" pattern="0.00"/> ft <br/>
+																Speed: ${record.location.speed} ft/s <br/>
 																<a class="label label-info" target="_blank"
 																	href="http://maps.google.com/?q=${record.location.latitude},${record.location.longitude}">Google maps</a>
 															</c:when>
