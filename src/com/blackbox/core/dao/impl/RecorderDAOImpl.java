@@ -96,7 +96,7 @@ public class RecorderDAOImpl implements RecorderDAO {
                 return null;
             }
         } ).filter( ( Record record ) -> record != null ).sorted( ( Record r1, Record r2 ) -> DateTimeComparator
-                .getInstance().compare( r1.getEndDate(), r2.getEndDate() ) ).collect( Collectors.toList() );
+                .getInstance().reversed().compare( r1.getEndDate(), r2.getEndDate() ) ).collect( Collectors.toList() );
     }
     
     @Override
