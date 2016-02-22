@@ -64,37 +64,46 @@
 						<div class="panel-heading">Audio records</div>
 						<!-- .panel-heading -->
 						<div class="panel-body">
-							<div class="panel-group" id="accordion" style="overflow: scroll;height: 350px;">
-							<c:choose>
-								<c:when test="${recordList != null and recordList.size() > 0 }">
-									<c:forEach items="${recordList}" var="record" varStatus="status">
-										<div class="panel panel-default">
-											<div class="panel-heading">
-												<h4 class="panel-title">
-													<a data-toggle="collapse" data-parent="#accordion"
-														href="#collapse_${status.index }"><c:out
-															value="${record.startDate.toString( 'MM-dd-yyyy hh:mm:ssa' )} TO ${record.endDate.toString( 'MM-dd-yyyy hh:mm:ssa' )}" /></a>
-												</h4>
-											</div>
-											<div id="collapse_${status.index }"
-												class="panel-collapse collapse">
-												<div class="panel-body">
-													<audio controls>
-														<source src="/audio/${record.name}.mp3" type="audio/mpeg" />
-													</audio>
-													<c:if test="${record.location != null }">
-														<a class="btn btn-info" target="_blank"
-															href="http://maps.google.com/?q=${record.location.latitude},${record.location.longitude}">MAP</a>
-													</c:if>
+							<div class="panel-group" id="accordion"
+								style="overflow: scroll; height: 350px;">
+								<c:choose>
+									<c:when test="${recordList != null and recordList.size() > 0 }">
+										<c:forEach items="${recordList}" var="record"
+											varStatus="status">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a data-toggle="collapse" data-parent="#accordion"
+															href="#collapse_${status.index }"><c:out
+																value="${record.startDate.toString( 'MM-dd-yyyy hh:mm:ssa' )} TO ${record.endDate.toString( 'MM-dd-yyyy hh:mm:ssa' )}" /></a>
+													</h4>
+												</div>
+												<div id="collapse_${status.index }"
+													class="panel-collapse collapse">
+													<div class="panel-body">
+														<audio controls>
+															<source src="/audio/${record.name}.mp3" type="audio/mpeg" />
+														</audio>
+														<c:choose>
+															<c:when
+																test="${record.location != null and  not record.location.isEmpty() }">
+																<a class="label label-info" target="_blank"
+																	href="http://maps.google.com/?q=${record.location.latitude},${record.location.longitude}">Google maps</a>
+															</c:when>
+															<c:otherwise>
+																<span class="label label-warning">Map unavailable</span>
+																
+															</c:otherwise>
+														</c:choose>
+													</div>
 												</div>
 											</div>
-										</div>
-									</c:forEach>
-								</c:when>
-								<c:otherwise>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
 									No audio record yet...
 								</c:otherwise>
-							</c:choose>
+								</c:choose>
 
 							</div>
 						</div>

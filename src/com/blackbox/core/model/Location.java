@@ -29,4 +29,8 @@ public class Location {
         return String.format( "%s, %s", longitude, latitude );
     }
     
+    public boolean isEmpty() {
+        return latitude == null || longitude == null;
+    }
+    
 }
