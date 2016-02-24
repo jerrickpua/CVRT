@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <html lang="en">
 <spring:eval expression="@recorderDAO.list()" var="recordList" />
@@ -15,7 +15,17 @@
 <meta name="author" content="">
 
 <title>PCVRT</title>
+<style type="text/css">
+.iwt {
+	display: block;
+}
+.logo {
+max-height: 25px;
+max-width: 25px;
+margin-right: 10px;
 
+}
+</style>
 
 </head>
 
@@ -33,8 +43,12 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="index.html"><b>Portable Cockpit Voice
-					Recorder and Transponder</b></a>
+				<a class="navbar-brand" href="/"> <span class="iwt"> <span><b>Portable
+								Cockpit Voice Recorder and Transponder</b></span> <i
+						class="pull-left icon-chevron-right "><img
+							alt="" class="logo" src="/assets/img/plane.png"></i>
+				</span>
+				</a>
 			</div>
 			<!-- /.navbar-header -->
 
@@ -88,15 +102,18 @@
 														</audio>
 														<c:choose>
 															<c:when
-																test="${record.location != null and  not record.location.isEmpty() }"><br/>
-																Altitude:<fmt:formatNumber value="${record.location.altitude}" pattern="0.00"/> ft <br/>
-																Speed: ${record.location.speed} ft/s <br/>
+																test="${record.location != null and  not record.location.isEmpty() }">
+																<br />
+																Altitude:<fmt:formatNumber
+																	value="${record.location.altitude}" pattern="0.00" /> ft <br />
+																Speed: ${record.location.speed} ft/s <br />
 																<a class="label label-info" target="_blank"
-																	href="http://maps.google.com/?q=${record.location.latitude},${record.location.longitude}">Google maps</a>
+																	href="http://maps.google.com/?q=${record.location.latitude},${record.location.longitude}">Google
+																	maps</a>
 															</c:when>
 															<c:otherwise>
 																<span class="label label-warning">Map unavailable</span>
-																
+
 															</c:otherwise>
 														</c:choose>
 													</div>
